@@ -1,0 +1,542 @@
+{
+  "_format": "У каждого права значение: [ true|false, «краткий комментарий» ]. Ключи — для справки и будущей привязки в коде; сейчас через prava.json проверяются в основном chat_mute и chat_unmute.",
+  "permission_descriptions": {
+    "op_panel": "Панель /op (статистика, банлист, выводы, промо, команды)",
+    "promolist_cmd": "Команды /promolist и текст «промокоды»",
+    "baninfo": "Команда //baninfo",
+    "ban_user": "Бан пользователя (игра / чат по контексту)",
+    "unban_user": "Разбан",
+    "kick_chat": "Кик из беседы (ответом)",
+    "captcha_force": "Принудительная капча !капча",
+    "promo_create": "!создатьпромо",
+    "promo_delete": "!удалитьпромо",
+    "mass_mail": "!рассылка",
+    "economy": "!экономика / !эко",
+    "deposit_off": "!деп- (отключить депозиты)",
+    "grant_balance": "!выдать",
+    "take_balance": "!снять",
+    "mass_collect": "!сбор",
+    "dolzhnost_full": "!должность — полный набор (все роли)",
+    "dolzhnost_limited": "!должность — в рамках прав зама",
+    "player_cd_reset": "!кд",
+    "gpt_admin": "/гпт в админ-режиме",
+    "withdrawals_queue": "!выводы",
+    "even1": "/even1 (доначисление ивента)",
+    "repost33": "/repost33",
+    "strike_repost": "/выговор по репостам",
+    "strike_staff": "+выговор / −выговор по составу",
+    "contest_builder": "Конструктор конкурса в /op",
+    "chat_mute": "Мут в беседе (мут / +мут)",
+    "chat_unmute": "Размут (−мут / размут)",
+    "chat_warn_minus": "−варн в беседе (ответом)",
+    "mod_info": "/инфо [юзер] в админ-беседе",
+    "promote_ladder": "!повысить (лестница модерации)",
+    "staff_balance_receive": "Служебный баланс от !выдать по правилам бота"
+  },
+  "roles": {
+    "owner": {
+      "op_panel": [
+        true,
+        "Полный доступ"
+      ],
+      "promolist_cmd": [
+        true,
+        ""
+      ],
+      "baninfo": [
+        true,
+        ""
+      ],
+      "ban_user": [
+        true,
+        ""
+      ],
+      "unban_user": [
+        true,
+        ""
+      ],
+      "kick_chat": [
+        true,
+        ""
+      ],
+      "captcha_force": [
+        true,
+        ""
+      ],
+      "promo_create": [
+        true,
+        ""
+      ],
+      "promo_delete": [
+        true,
+        ""
+      ],
+      "mass_mail": [
+        true,
+        ""
+      ],
+      "economy": [
+        true,
+        ""
+      ],
+      "deposit_off": [
+        true,
+        ""
+      ],
+      "grant_balance": [
+        true,
+        ""
+      ],
+      "take_balance": [
+        true,
+        ""
+      ],
+      "mass_collect": [
+        true,
+        ""
+      ],
+      "dolzhnost_full": [
+        true,
+        ""
+      ],
+      "dolzhnost_limited": [
+        true,
+        ""
+      ],
+      "player_cd_reset": [
+        true,
+        ""
+      ],
+      "gpt_admin": [
+        true,
+        ""
+      ],
+      "withdrawals_queue": [
+        true,
+        ""
+      ],
+      "even1": [
+        true,
+        ""
+      ],
+      "repost33": [
+        true,
+        ""
+      ],
+      "strike_repost": [
+        true,
+        ""
+      ],
+      "strike_staff": [
+        true,
+        "По правилам владельца"
+      ],
+      "contest_builder": [
+        true,
+        ""
+      ],
+      "chat_mute": [
+        true,
+        ""
+      ],
+      "chat_unmute": [
+        true,
+        ""
+      ],
+      "chat_warn_minus": [
+        true,
+        ""
+      ],
+      "mod_info": [
+        true,
+        ""
+      ],
+      "promote_ladder": [
+        true,
+        ""
+      ],
+      "staff_balance_receive": [
+        false,
+        "Не игровая роль служебного баланса"
+      ]
+    },
+    "deputy_owner": {
+      "op_panel": [
+        true,
+        ""
+      ],
+      "promolist_cmd": [
+        true,
+        ""
+      ],
+      "baninfo": [
+        true,
+        ""
+      ],
+      "ban_user": [
+        true,
+        "До 30 мин"
+      ],
+      "unban_user": [
+        true,
+        ""
+      ],
+      "kick_chat": [
+        true,
+        ""
+      ],
+      "captcha_force": [
+        true,
+        ""
+      ],
+      "promo_create": [
+        true,
+        ""
+      ],
+      "promo_delete": [
+        false,
+        "Только владелец"
+      ],
+      "mass_mail": [
+        false,
+        ""
+      ],
+      "economy": [
+        false,
+        ""
+      ],
+      "deposit_off": [
+        false,
+        ""
+      ],
+      "grant_balance": [
+        false,
+        ""
+      ],
+      "take_balance": [
+        false,
+        ""
+      ],
+      "mass_collect": [
+        false,
+        ""
+      ],
+      "dolzhnost_full": [
+        false,
+        "Стажёр, 2-й зам, снять; полный набор — владелец"
+      ],
+      "dolzhnost_limited": [
+        true,
+        "Стажёр, 2-й зам, снять"
+      ],
+      "player_cd_reset": [
+        false,
+        ""
+      ],
+      "gpt_admin": [
+        false,
+        ""
+      ],
+      "withdrawals_queue": [
+        false,
+        ""
+      ],
+      "even1": [
+        false,
+        ""
+      ],
+      "repost33": [
+        false,
+        ""
+      ],
+      "strike_repost": [
+        false,
+        ""
+      ],
+      "strike_staff": [
+        true,
+        "Может выдавать/снимать выговоры составу"
+      ],
+      "contest_builder": [
+        true,
+        ""
+      ],
+      "chat_mute": [
+        true,
+        ""
+      ],
+      "chat_unmute": [
+        true,
+        ""
+      ],
+      "chat_warn_minus": [
+        false,
+        "По составу — только владелец"
+      ],
+      "mod_info": [
+        true,
+        ""
+      ],
+      "promote_ladder": [
+        true,
+        "Стажёр → мл. мод."
+      ],
+      "staff_balance_receive": [
+        false,
+        ""
+      ]
+    },
+    "moderator": {
+      "op_panel": [
+        false,
+        ""
+      ],
+      "promolist_cmd": [
+        true,
+        ""
+      ],
+      "baninfo": [
+        false,
+        ""
+      ],
+      "ban_user": [
+        false,
+        ""
+      ],
+      "unban_user": [
+        false,
+        ""
+      ],
+      "kick_chat": [
+        false,
+        ""
+      ],
+      "captcha_force": [
+        false,
+        ""
+      ],
+      "promo_create": [
+        false,
+        ""
+      ],
+      "promo_delete": [
+        false,
+        ""
+      ],
+      "mass_mail": [
+        false,
+        ""
+      ],
+      "economy": [
+        false,
+        ""
+      ],
+      "deposit_off": [
+        false,
+        ""
+      ],
+      "grant_balance": [
+        false,
+        ""
+      ],
+      "take_balance": [
+        false,
+        ""
+      ],
+      "mass_collect": [
+        false,
+        ""
+      ],
+      "dolzhnost_full": [
+        false,
+        ""
+      ],
+      "dolzhnost_limited": [
+        false,
+        ""
+      ],
+      "player_cd_reset": [
+        false,
+        ""
+      ],
+      "gpt_admin": [
+        false,
+        ""
+      ],
+      "withdrawals_queue": [
+        false,
+        ""
+      ],
+      "even1": [
+        false,
+        ""
+      ],
+      "repost33": [
+        false,
+        ""
+      ],
+      "strike_repost": [
+        false,
+        ""
+      ],
+      "strike_staff": [
+        true,
+        ""
+      ],
+      "contest_builder": [
+        false,
+        ""
+      ],
+      "chat_mute": [
+        true,
+        ""
+      ],
+      "chat_unmute": [
+        true,
+        ""
+      ],
+      "chat_warn_minus": [
+        true,
+        ""
+      ],
+      "mod_info": [
+        true,
+        ""
+      ],
+      "promote_ladder": [
+        false,
+        ""
+      ],
+      "staff_balance_receive": [
+        false,
+        ""
+      ]
+    },
+    "sponsor": {
+      "op_panel": [
+        false,
+        ""
+      ],
+      "promolist_cmd": [
+        false,
+        ""
+      ],
+      "baninfo": [
+        false,
+        ""
+      ],
+      "ban_user": [
+        false,
+        ""
+      ],
+      "unban_user": [
+        false,
+        ""
+      ],
+      "kick_chat": [
+        false,
+        ""
+      ],
+      "captcha_force": [
+        false,
+        ""
+      ],
+      "promo_create": [
+        false,
+        ""
+      ],
+      "promo_delete": [
+        false,
+        ""
+      ],
+      "mass_mail": [
+        false,
+        ""
+      ],
+      "economy": [
+        false,
+        ""
+      ],
+      "deposit_off": [
+        false,
+        ""
+      ],
+      "grant_balance": [
+        false,
+        ""
+      ],
+      "take_balance": [
+        false,
+        ""
+      ],
+      "mass_collect": [
+        false,
+        ""
+      ],
+      "dolzhnost_full": [
+        false,
+        ""
+      ],
+      "dolzhnost_limited": [
+        false,
+        ""
+      ],
+      "player_cd_reset": [
+        false,
+        ""
+      ],
+      "gpt_admin": [
+        false,
+        ""
+      ],
+      "withdrawals_queue": [
+        false,
+        ""
+      ],
+      "even1": [
+        false,
+        ""
+      ],
+      "repost33": [
+        false,
+        ""
+      ],
+      "strike_repost": [
+        false,
+        ""
+      ],
+      "strike_staff": [
+        false,
+        ""
+      ],
+      "contest_builder": [
+        false,
+        ""
+      ],
+      "chat_mute": [
+        false,
+        ""
+      ],
+      "chat_unmute": [
+        false,
+        ""
+      ],
+      "chat_warn_minus": [
+        false,
+        ""
+      ],
+      "mod_info": [
+        false,
+        ""
+      ],
+      "promote_ladder": [
+        false,
+        ""
+      ],
+      "staff_balance_receive": [
+        true,
+        ""
+      ]
+    }
+  }
+}

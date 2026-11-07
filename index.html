@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - Бот Нищий</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #0f0c29;
+        }
+        
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        header {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.9) 0%, rgba(37, 117, 252, 0.9) 100%);
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .user-id {
+            font-size: 1rem;
+            opacity: 0.9;
+            background: rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+        }
+        
+        main {
+            padding: 2rem 1.5rem;
+        }
+        
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .badge {
+            background: rgba(106, 17, 203, 0.15);
+            border: 1px solid rgba(106, 17, 203, 0.3);
+            border-radius: 20px;
+            padding: 0.3rem 1rem;
+            font-size: 0.85rem;
+        }
+        
+        .info-card {
+            background: rgba(45, 45, 45, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #bbbbbb;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+        
+        .info-value.balance {
+            color: #6a11cb;
+            font-size: 1.1rem;
+        }
+        
+        .info-value.reputation.positive {
+            color: #4caf50;
+        }
+        
+        .info-value.reputation.negative {
+            color: #ff6b6b;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            width: 0%;
+        }
+        
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+        
+        .extra-info {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .extra-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: rgba(45, 45, 45, 0.4);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .extra-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(106, 17, 203, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .extra-text {
+            flex: 1;
+        }
+        
+        .extra-title {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .extra-value {
+            font-weight: 500;
+        }
+        
+        .spouse-link {
+            color: #6a11cb;
+            text-decoration: none;
+            border-bottom: 1px dashed #6a11cb;
+        }
+        
+        .spouse-link:hover {
+            color: #2575fc;
+            border-bottom-color: #2575fc;
+        }
+        
+        .warning {
+            background: rgba(198, 40, 40, 0.15);
+            border: 1.5px solid rgba(198, 40, 40, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            color: #ef9a9a;
+        }
+        
+        .photo-section {
+            margin: 1.5rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(106, 17, 203, 0.3);
+            display: none;
+        }
+        
+        .photo-section img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .photo-caption {
+            padding: 0.75rem;
+            text-align: center;
+            background: rgba(106, 17, 203, 0.1);
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-decoration: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #888;
+            max-width: 480px;
+            width: 100%;
+            padding: 1rem;
+        }
+
+        .badge {
+    background: rgba(106, 17, 203, 0.15);
+    border: 1px solid rgba(106, 17, 203, 0.3);
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+    font-size: 0.85rem;
+    color: #e0e0e0;
+    backdrop-filter: blur(5px);
+    font-weight: 500;
+}
+
+.badge.admin { 
+    background: rgba(255, 69, 58, 0.2); 
+    border-color: #ff453a; 
+    color: #ff6b6b;
+}
+
+.badge.moder { 
+    background: rgba(255, 105, 180, 0.2); 
+    border-color: #ff69b4; 
+    color: #ffb6c1;
+}
+
+.badge.premium { 
+    background: rgba(255, 215, 0, 0.2); 
+    border-color: gold; 
+    color: #ffd700;
+}
+
+.badge.vampire { 
+    background: rgba(156, 39, 176, 0.2); 
+    border-color: #9c27b0; 
+    color: #ce93d8;
+}
+
+.badge.creator { 
+    background: rgba(33, 150, 243, 0.2); 
+    border-color: #2196f3; 
+    color: #90caf9;
+}
+
+.badge.dev { 
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4caf50; 
+    color: #81c784;
+}
+
+.badge.president { 
+    background: rgba(255, 193, 7, 0.2); 
+    border-color: #ffc107; 
+    color: #ffd54f;
+}
+
+.info-label svg {
+    margin-right: 5px;
+}
+header a {
+    text-decoration: none;
+    color: white;
+    transition: opacity 0.3s ease;
+}
+
+header a:hover {
+    opacity: 0.5;
+}
+
+header a h1 {
+    margin-bottom: 0.5rem;
+}
+    </style>
+
+            <script>
+                window.profileData = {"id": 869359783, "nickname": "Haily Kaufman", "balance": 15000000000000, "piska": 0, "piska_rank": 306, "level": 1, "exp": 0, "reputation": 0, "clan": "", "clan_role": 0, "family": "", "business_id": 0, "business_name": "Нет бизнеса", "pet_id": 0, "pet_name": "Нет питомца", "phone_id": 0, "phone_name": "Нет телефона", "register_date": "2024-07-13 23:43:30", "premium_until": 1736069060.9038255, "vampire_until": 0, "creator": false, "admin_dev": false, "president": false, "moderator_level": 0, "scam": false, "married": false, "spouse": null, "photo_url": "https://sun9-30.userapi.com/s/v1/ig2/mi3ODq1dKI01b4SZWmkMUgJ6-6xDplKY1HbAcYP4gO0QqKRGXo8YFnDKeYnRPje-luxWXWWmBT6lGIzcWri-6EM1.jpg?quality=96&as=32x21,48x32,72x48,108x72,160x107,240x160,360x240,480x320,510x340&from=bu&u=lUsVbv8uSzC732itkePo-gaF875BqOKRKKsGfJJ896E"};
+            </script>
+            </head>
+<body>
+    <div class="container">
+       <header>
+            <div class="header-content">
+                <a href="https://vk.com/id{id}" id="profileLink" target="_blank" style="text-decoration: none; color: white;">
+                    <h1 id="userName">Загрузка...</h1>
+                </a>
+                <div class="user-id" id="userId">ID: <span id="userIdSpan"></span></div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="badges" id="badgesContainer"></div>
+            
+            <div class="info-card" id="profileInfo">
+                <div class="loading">Загрузка профиля...</div>
+            </div>
+            
+            <div class="photo-section" id="photoSection">
+                <img id="profilePhoto" src="" alt="Фото профиля">
+            </div>
+            
+            <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; align-items: stretch;" id="profileButtons">
+                <a href="/" class="back-btn" style="text-decoration: none; text-align: center;">
+                    <span>На главную</span>
+                </a>
+                
+                <div id="logoutButtonContainer" style="display: none;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <a href="/roulette" class="back-btn" style="text-decoration: none; text-align: center; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                            <span>🎰 Рулетка</span>
+                        </a>
+                        <button id="logoutBtn" class="back-btn" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%); border: none; cursor: pointer; width: 100%;">
+                            <span>Выйти</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <p>© 2026 Бот нищий · Профиль игрока</p>
+    </footer>
+
+    <script>
+    (function() {
+        
+        function formatNumber(num) {
+            if (num === undefined || num === null) return '0';
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        function formatReputation(rep) {
+            if (rep === undefined || rep === null) return { text: '0', class: '' };
+            if (rep > 0) return { text: '+' + rep, class: 'positive' };
+            if (rep < 0) return { text: rep.toString(), class: 'negative' };
+            return { text: '0', class: '' };
+        }
+        
+        function getPiskaRank(tops) {
+            if (!tops) tops = 100;
+            if (tops > 500) return 'Рядовой писечник';
+            if (tops > 200) return 'Неопытный писечник';
+            if (tops > 100) return 'Опытный писечник';
+            if (tops > 50) return 'Ветеран писечников';
+            if (tops > 20) return 'Легендарный писечник';
+            if (tops > 10) return 'Писечник-перфекционист';
+            if (tops > 5) return 'Эксклюзивный писечник';
+            if (tops > 1) return 'Непревзойденный писечник';
+            if (tops === 1) return 'Король писечников';
+            return 'Рядовой писечник';
+        }
+        
+        function renderProfile(profile) {
+            
+            try {
+                document.getElementById('userName').textContent = profile.nickname || `Пользователь ${profile.id}`;
+                document.getElementById('userIdSpan').textContent = profile.id || '?';
+                
+                const profileLink = document.getElementById('profileLink');
+                profileLink.href = `https://vk.com/id${profile.id}`;
+                
+                const badges = [];
+                const now = Date.now();
+                
+                if (profile.moderator_level === 1) badges.push({ text: '👺 МОДЕРАТОР-СТАЖЁР', class: 'moder' });
+                if (profile.moderator_level === 2) badges.push({ text: '👺 МЛ. МОДЕРАТОР', class: 'moder' });
+                if (profile.moderator_level === 3) badges.push({ text: '👺 МОДЕРАТОР', class: 'moder' });
+                if (profile.moderator_level === 4) badges.push({ text: '👺 СТ. МОДЕРАТОР', class: 'moder' });
+                if (profile.moderator_level === 5) badges.push({ text: '👹 АДМИНИСТРАТОР', class: 'admin' });
+                if (profile.moderator_level === 6) badges.push({ text: '👹 СТ. АДМИНИСТРАТОР', class: 'admin' });
+                
+                if (profile.premium_until && profile.premium_until * 1000 > now) {
+                    badges.push({ text: '💎 PREMIUM', class: 'premium' });
+                }
+                
+                if (profile.vampire_until && profile.vampire_until * 1000 > now) {
+                    badges.push({ text: '🧛‍♂ ВАМПИР', class: 'vampire' });
+                }
+                
+                if (profile.creator) {
+                    badges.push({ text: '🎨 CREATOR', class: 'creator' });
+                }
+                
+                if (profile.admin_dev) {
+                    badges.push({ text: '👨‍💻 РАЗРАБОТЧИК', class: 'dev' });
+                }
+                
+                if (profile.president) {
+                    badges.push({ text: '🔞 ПРЕЗИДЕНТ', class: 'president' });
+                }
+                
+                const badgesContainer = document.getElementById('badgesContainer');
+                if (badges.length > 0) {
+                    badgesContainer.innerHTML = badges.map(b => 
+                        `<span class="badge ${b.class}">${b.text}</span>`
+                    ).join('');
+                } else {
+                    badgesContainer.innerHTML = '';
+                }
+                
+                const formattedBalance = formatNumber(profile.balance);
+                const repFormatted = formatReputation(profile.reputation);
+                const piskaRank = getPiskaRank(profile.piska_rank);
+                const expProgress = profile.exp ? (profile.exp / 100) * 100 : 0;
+                
+                let infoHtml = `
+                    <div class="info-row">
+                        <span class="info-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#6a11cb">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            </svg>
+                            💸 Баланс
+                        </span>
+                        <span class="info-value balance">${formattedBalance}$</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#6a11cb">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            </svg>
+                            🍌 Писька
+                        </span>
+                        <span class="info-value">${profile.piska || 0} см (${piskaRank})</span>
+                    </div>
+                    
+                    <div class="info-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <span class="info-label">📊 Уровень ${profile.level || 1}</span>
+                            <span class="info-value">${profile.exp || 0}/100 XP</span>
+                        </div>
+                        <div class="progress-bar" style="margin: 0;">
+                            <div class="progress-fill" style="width: ${expProgress}%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#6a11cb">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            </svg>
+                            😘 Репутация
+                        </span>
+                        <span class="info-value reputation ${repFormatted.class}">${repFormatted.text}</span>
+                    </div>
+                `;
+                
+                if (profile.clan) {
+                    const clanRoles = ['Участник', 'Старейшина', 'Админ', 'Владелец'];
+                    const role = clanRoles[profile.clan_role] || 'Участник';
+                    infoHtml += `
+                        <div class="info-row">
+                            <span class="info-label">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="#6a11cb">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                                </svg>
+                                👾 Клан
+                            </span>
+                            <span class="info-value">"${profile.clan}" (${role})</span>
+                        </div>
+                    `;
+                }
+                
+                if (profile.family) {
+                    infoHtml += `
+                        <div class="info-row">
+                            <span class="info-label">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="#6a11cb">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                                </svg>
+                                👨‍👩‍👦 Семья
+                            </span>
+                            <span class="info-value">${profile.family}</span>
+                        </div>
+                    `;
+                }
+                
+                if (profile.married && profile.spouse) {
+                    infoHtml += `
+                        <div class="info-row">
+                            <span class="info-label">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="#6a11cb">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                                </svg>
+                                💍 В браке
+                            </span>
+                            <span class="info-value">
+                                с <a href="/profile/${profile.spouse.id}" class="spouse-link">${profile.spouse.nickname}</a>
+                            </span>
+                        </div>
+                    `;
+                }
+                
+                let extraHtml = '';
+                
+                if (profile.business_id && profile.business_id != 0) {
+                    extraHtml += `
+                        <div class="extra-item">
+                            <div class="extra-icon">🏭</div>
+                            <div class="extra-text">
+                                <div class="extra-title">Бизнес</div>
+                                <div class="extra-value">${profile.business_name}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (profile.pet_id && profile.pet_id != 0) {
+                    extraHtml += `
+                        <div class="extra-item">
+                            <div class="extra-icon">🐶</div>
+                            <div class="extra-text">
+                                <div class="extra-title">Питомец</div>
+                                <div class="extra-value">${profile.pet_name}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (profile.phone_id && profile.phone_id != 0) {
+                    extraHtml += `
+                        <div class="extra-item">
+                            <div class="extra-icon">📱</div>
+                            <div class="extra-text">
+                                <div class="extra-title">Телефон</div>
+                                <div class="extra-value">${profile.phone_name}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (profile.register_date && profile.register_date !== "Неизвестно") {
+                    extraHtml += `
+                        <div class="extra-item">
+                            <div class="extra-icon">📅</div>
+                            <div class="extra-text">
+                                <div class="extra-title">Дата регистрации</div>
+                                <div class="extra-value">${profile.register_date}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                const finalHtml = infoHtml + (extraHtml ? '<div class="extra-info">' + extraHtml + '</div>' : '') + (profile.scam ? `
+                    <div class="warning">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#ef9a9a">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        Данный юзер попадался за обман! Будьте осторожны!
+                    </div>
+                ` : '');
+                
+                document.getElementById('profileInfo').innerHTML = finalHtml;
+                
+                if (profile.photo_url) {
+                    document.getElementById('profilePhoto').src = profile.photo_url;
+                    document.getElementById('photoSection').style.display = 'block';
+                }
+                
+                
+            } catch (error) {
+                console.error('Render error:', error);
+                document.getElementById('profileInfo').innerHTML = `
+                    <div style="color: red; padding: 20px; text-align: center;">
+                        Ошибка отображения: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        if (window.profileData) {
+            
+            if (window.profileData.error) {
+                document.getElementById('profileInfo').innerHTML = `
+                    <div style="color: red; padding: 20px; text-align: center;">
+                        ${window.profileData.error}
+                    </div>
+                `;
+            } else {
+                renderProfile(window.profileData);
+            }
+        } else {
+            
+            const pathParts = window.location.pathname.split('/');
+            const userId = pathParts[pathParts.length - 1];
+            
+            if (userId && !isNaN(userId)) {
+                fetch(`/api/profile/${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            document.getElementById('profileInfo').innerHTML = `
+                                <div style="color: red; padding: 20px; text-align: center;">
+                                    ${data.error}
+                                </div>
+                            `;
+                        } else {
+                            renderProfile(data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        document.getElementById('profileInfo').innerHTML = `
+                            <div style="color: red; padding: 20px; text-align: center;">
+                                Ошибка загрузки: ${error.message}
+                            </div>
+                        `;
+                    });
+            }
+        }
+    })();
+</script>
+<script>
+// Проверка авторизации и владельца профиля
+document.addEventListener('DOMContentLoaded', async function() {
+    const logoutButtonContainer = document.getElementById('logoutButtonContainer');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (!logoutButtonContainer || !logoutBtn) return;
+    
+    try {
+        // Получаем ID профиля из URL
+        const pathParts = window.location.pathname.split('/');
+        const profileId = parseInt(pathParts[pathParts.length - 1]);
+        
+        // Проверяем текущую сессию
+        const sessionResponse = await fetch('/api/check-session');
+        const sessionData = await sessionResponse.json();
+        
+        // Показываем кнопку выхода только если:
+        // 1. Пользователь авторизован (authenticated === true)
+        // 2. ID из сессии совпадает с ID просматриваемого профиля
+        if (sessionData.authenticated && sessionData.user_id === profileId) {
+            logoutButtonContainer.style.display = 'block';
+        } else {
+            logoutButtonContainer.style.display = 'none';
+        }
+        
+        // Обработчик выхода
+        logoutBtn.addEventListener('click', async function() {
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    // Перенаправляем на главную после выхода
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+        
+    } catch (error) {
+        console.error('Session check error:', error);
+        logoutButtonContainer.style.display = 'none';
+    }
+});
+</script>
+<script>
+// Дополнительный код для кнопки рулетки
+document.addEventListener('DOMContentLoaded', function() {
+    // Получаем ID из URL или из window.profileData
+    const pathParts = window.location.pathname.split('/');
+    const profileId = pathParts[pathParts.length - 1];
+    
+    // Устанавливаем ссылку для кнопки рулетки
+    const rouletteBtn = document.getElementById('rouletteBtn');
+    if (rouletteBtn && profileId && !isNaN(profileId)) {
+        rouletteBtn.href = `/roulette/${profileId}`;
+    }
+    
+    // Альтернативный вариант: если есть window.profileData
+    if (window.profileData && window.profileData.id) {
+        rouletteBtn.href = `/roulette/${window.profileData.id}`;
+    }
+});
+</script>
+</body>
+</html>
